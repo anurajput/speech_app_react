@@ -2,93 +2,112 @@ import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import axios from 'axios';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
-import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
 
+import {connect} from 'react-redux';
+import {userActions} from '../actions';
 
-const styles = {
-  
-  loginContainer: {
+const styles = {  
+  Container: {
       minWidth: 320,
       maxWidth: 400,
       height:'auto',
       position: 'absolute',
-      
       left: 0,
       right: 0,
       margin: 'auto',
-     
-    },
-  
-};
+     },
+  };
 
+//---------------------------------------------------
+//
+//         LOGIN PAGE
+//
+//---------------------------------------------------
 class LoginPage extends React.Component {
 
-constructor(props){
-  super(props);
+  // ------------------------------------------------
+  // constructor
+  // ------------------------------------------------
+  constructor(props){
+    super(props);
 
-  console.log("-- props: " + JSON.stringify(props) );
-
-  this.state={
-      email: '',
-      password: ''
+    this.state = {     
+      email:'',
+      password: '',
+      submitted: false
     }
- }
 
-handleLogin(event){
-  console.log("-- handleLogin --");
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
+  // ------------------------------------------------
+  // handleChange
+  // ------------------------------------------------
+  handleChange(e) {
+    console.log(`-- handleChange, target: ${e.target.name}`);
 
-  var self = this;
+    const {name, value} = e.target;
+    this.setState({[name]: value});
+  }
 
-  var headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+  // ------------------------------------------------
+  // handleSubmit
+  // ------------------------------------------------
+  handleSubmit(e) {
+    e.preventDefault();
 
-  var payload  = { "email": this.state.email, "password": this.state.password };
+    console.log('-- handleSubmit --');
 
-  axios.post('http://crosswinds.oflanderclient.com/auth/login', payload, headers)
-   .then((result) => {
-      console.log("login result: " + JSON.stringify(result) );
-        this.props.callSetLoggedOfParent(true); 
+    this.setState({submitted: true});
+    const {email, password} = this.state;
+    const {dispatch} = this.props;
 
-
-  })
-  .catch((err) => {
-      console.log("login err: " + err);
-  })
-
-}
+    if (email && password) {
+      console.log('dispatching -> login');
+      var history = this.props.history;
+      dispatch(userActions.login(history, email, password));
+    }
+  }
 
 render() {
+
     return (
       <div>
         <MuiThemeProvider>
-          <div style={styles.loginContainer}>
-          <h3>Login</h3>
-           <TextField
-             hintText="Enter your email"
-             floatingLabelText="Email"
-             onChange = {(event,newValue) => this.setState({email:newValue})}
+          <div style={styles.Container}>
+          <h3>Log In</h3>
+          <form name="form" onSubmit={this.handleSubmit}> 
+            <TextField
+               hintText="Enter your Email"
+               floatingLabelText="Email"
+               name="email"
+               onChange={this.handleChange} 
              />
-           <br/>
-             <TextField
+            <br/>
+            <TextField
                type="password"
                hintText="Enter your Password"
                floatingLabelText="Password"
-               onChange = {(event,newValue) => this.setState({password:newValue})}
+               name="password"
+               onChange={this.handleChange} 
                />
              <br/>
-             <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleLogin(event)}/>
+            <RaisedButton label="Submit" primary={true} type="submit"/>
+          </form>
          </div>
          </MuiThemeProvider>
       </div>
     );
-  }
+  }//render
+}//LoginPage
+
+function mapStateToProps(state) {
+  const {alert} = state;
+  return {
+    alert,
+  };
 }
-const style = {
- margin: 15,
-};
-export default LoginPage;
+
+const connectedLoginPage = connect(mapStateToProps)(LoginPage);
+export {connectedLoginPage as LoginPage};
