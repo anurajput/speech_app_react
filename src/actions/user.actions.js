@@ -2,12 +2,12 @@ import {userConstants} from '../constants';
 import {userService} from '../services';
 import {alertActions} from './';
 
-//import {browserHistory} from 'react-router';
 
 export const userActions = {
   login,
   logout,
   register,
+  getApi,
   getAll,
   delete: _delete,
 };
@@ -21,7 +21,7 @@ function login(history, email, password) {
                 (user) => {
                   dispatch(success(user));
                   console.log('FIXME :: action:login: push / ???');
-                   history.push('/');
+                  history.push('/');
                 },
                 (error) => {
                   dispatch(failure(error));
@@ -29,6 +29,8 @@ function login(history, email, password) {
                 }
             );
   };
+
+
 
   function request(user) {
     return {type: userConstants.LOGIN_REQUEST, user};
@@ -46,12 +48,12 @@ function logout() {
 
   userService.logout();
 
-    console.log('FIXME :: action:login: push /login ???');
-    // browserHistory.push('/login');
+  console.log('FIXME :: action:login: push /login ???');
+    
   return {type: userConstants.LOGOUT};
 }
 
-function register(user) {
+function register(history, user) {
   return (dispatch) => {
     dispatch(request(user));
 
@@ -59,10 +61,8 @@ function register(user) {
             .then(
                 (user) => {
                   dispatch(success());
-
                   console.log('FIXME :: action:login: push /login ???');
-                  //browserHistory.push('/login');
-
+                  history.push('/');
                   dispatch(alertActions.success('Registration successful'));
                 },
                 (error) => {
@@ -83,6 +83,32 @@ function register(user) {
   }
 }
 
+
+function getApi(history,token) {
+  return (dispatch) => {
+    dispatch(requestApi());
+
+    userService.getApi(token)
+            .then(
+                (users) => {
+                  dispatch(success(users));
+                  history.push('/');
+                },
+
+                (error) => dispatch(failure(error))
+            );
+  };
+  function requestApi() {
+    return {type: userConstants.API_REQUEST};
+  }
+   function success(users) {
+    return {type: userConstants.API_SUCCESS, users};
+  }
+  function failure(error) {
+    return {type: userConstants.API_FAILURE, error};
+  }
+}
+
 function getAll() {
   return (dispatch) => {
     dispatch(request());
@@ -93,6 +119,8 @@ function getAll() {
                 (error) => dispatch(failure(error))
             );
   };
+
+  
 
   function request() {
     return {type: userConstants.GETALL_REQUEST};

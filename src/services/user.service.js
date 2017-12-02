@@ -4,6 +4,7 @@ export const userService = {
   login,
   logout,
   register,
+  getApi,
   getAll,
   getById,
   update,
@@ -59,6 +60,18 @@ function logout() {
   localStorage.removeItem('user');
 }
 
+
+
+function getApi(token) {
+  const requestOptions = {
+    method: 'GET',
+    headers: authHeader(),
+  };
+
+  return fetch('http://52.230.8.132:8080/api/get_study_material?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidG9tQGdtYWlsLmNvbSIsImV4cCI6MTUxMjIxNzk3MX0.AZBg1IESyGwQU-UkyGWWUQsf2b5T3_sn63oND3PlBu8', requestOptions).then(handleResponse);
+}
+
+
 function getAll() {
   const requestOptions = {
     method: 'GET',
@@ -67,6 +80,8 @@ function getAll() {
 
   return fetch('/users', requestOptions).then(handleResponse);
 }
+
+
 
 function getById(id) {
   const requestOptions = {
@@ -78,7 +93,7 @@ function getById(id) {
 }
 
 function register(user) {
-  var body = `security_level=1&email=${user.email  }&password=${  user.password  }&first_name=${  user.first_name  }&last_name=${  user.last_name}`;
+  var body = `security_level=1&email=${user.email  }&password=${  user.password  }&id=${  user.id  }&name=${  user.name}`;
 
   console.log(`body: ${  body}`);
 
@@ -87,8 +102,9 @@ function register(user) {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     body: body,
   };
-
-  return fetch('http://crosswinds.oflanderclient.com/user/register', requestOptions).then(handleResponse);
+  return fetch('http://52.230.8.132:8080/api/user_registration', requestOptions).then(handleResponse);
+       
+  
 }
 
 function update(user) {
@@ -116,7 +132,15 @@ function _delete(id) {
 function handleResponse(response) {
   if (!response.ok) {
     return Promise.reject(response.statusText);
+   
   }
+  
+  return response.json()
 
-  return response.json();
+   .then((token_resp) => {
+          console.log(`token_resp: ${  JSON.stringify(token_resp)}` );
+
+           });
+
 }
+

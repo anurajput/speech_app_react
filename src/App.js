@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-
-import {LoginPage} from "./containers/LoginPage"
-import RegisterPage from "./containers/RegisterPage"
-import Header from "./containers/Header"
-import dataTablePage from "./containers/dataTablePage"
-import getAPI from "./containers/getApi"
+import Header from "./components/Header"
+import {Routes} from './routes'
 
 import {connect} from 'react-redux';
 
@@ -15,25 +10,17 @@ import {connect} from 'react-redux';
 class App extends Component {
    render() {
       return (
-         <Router>
-            <div>
-               <Header />
-               <hr />
-               
-               <Switch>
-                  <Route exact path='/user_login' component={LoginPage} />
-                  <Route exact path='/register' component={RegisterPage} />
-                  <Route exact path='/dataTable' component={dataTablePage} />
-                  <Route exact path='/recordVoice' component={getAPI} />
-                   
-               </Switch>
-            </div>
-         </Router>
-      );
-   }
-}//App
+         <div>
+            <Header />
+            <hr />
+            <Routes/>
+          </div>
 
-//export default App;
+      );//return
+
+   }//render
+
+}//App
 
 function mapStateToProps(state) {
   const {alert} = state;

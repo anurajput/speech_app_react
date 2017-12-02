@@ -3,6 +3,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
+import {connect} from 'react-redux';
+import {userActions} from '../actions';
+
+
 const styles = {
   
   Container: {
@@ -16,65 +20,64 @@ const styles = {
      },
   };
 
+
+//---------------------------------------------------
+//
+//         REGISTER PAGE
+//
+//---------------------------------------------------
+
 class RegisterPage extends React.Component {
 constructor(props){
   super(props);
 
-  this.state={
-      id:'',
-      name: '',
-      email:'',
-      pswd: ''
+ this.state = {
+            user: {
+                id: '',
+                name: '',
+                email: '',
+                password: ''
+            },
+            submitted: false
+        };
+ 
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
- }
 
-handleRegister(event){
- const requestOptions = {
-    method: 'POST',
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    body: `id=${this.state.id}&name=${this.state.name}&email=${this.state.email }&pswd=${  this.state.pswd}`,
-  };
-
-  
-  return fetch('http://192.168.1.104:8080/api/user_registration', requestOptions)
-        .then((response) => {
-          if (!response.ok) {
-            return Promise.reject(response.statusText);
-             
-          }
-
-          return response.json();
-        })
-        .then((token_resp) => {
-          console.log(`token_resp: ${  JSON.stringify(token_resp)}` );
-
-            // ----------------------------------------------------------
-            // login successful if there's a jwt token in the response
-            // ----------------------------------------------------------
-          if (token_resp && token_resp.token) {
-            var user = {
-              email: this.state.email,
-              token: token_resp.token,
-            };
-
-                // ------------------------------------------------------
-                // store user details and jwt token in local storage
-                // to keep user logged in between page refreshes
-                // ------------------------------------------------------
-            localStorage.setItem('user', JSON.stringify(user));
-          }
-
-          return user;
+  // ------------------------------------------------
+  // handleChange
+  // ------------------------------------------------
+ 
+    handleChange(event) {
+      console.log(`-- handleChange, target: ${event.target.name}`);
+        const { name, value } = event.target;
+        const { user } = this.state;
+        this.setState({
+            user: {
+                ...user,
+                [name]: value
+            }
         });
+    }
 
+  // ------------------------------------------------
+  // handleSubmit
+  // ------------------------------------------------
+ 
+    handleSubmit(event) {
+        event.preventDefault();
+       
+        this.setState({ submitted: true });
+        const { user } = this.state;
+        const { dispatch } = this.props;
 
-
-  
-
-
-
-}
-
+        if (user.id && user.name && user.email && user.password) {
+          console.log('dispatching -> register');
+          var history = this.props.history;
+          dispatch(userActions.register(history, user));
+        }
+    }
 
 
 render() {
@@ -82,38 +85,51 @@ render() {
       <div>
         <MuiThemeProvider>
           <div style={styles.Container}>
-          <h3>Sign Up</h3>
-            <TextField
-             hintText="Enter your id"
-             floatingLabelText="User id"
-             onChange = {(event,newValue) => this.setState({id:newValue})}
-             />
-            <TextField
-             hintText="Enter your name"
-             floatingLabelText="User name"
-             onChange = {(event,newValue) => this.setState({name:newValue})}
-             />
-           <TextField
-             hintText="Enter your Email"
-             floatingLabelText="Email"
-             onChange = {(event,newValue) => this.setState({email:newValue})}
-             />
-           <br/>
-             <TextField
-               type="password"
-               hintText="Enter your Password"
-               floatingLabelText="Password"
-               onChange = {(event,newValue) => this.setState({pswd:newValue})}
-               />
-             <br/>
-             <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleRegister(event)}/>
-         </div>
+            <h3>Sign Up</h3>
+              <form name="form" onSubmit={this.handleSubmit}> 
+                <TextField
+                  hintText="Enter your id"
+                  floatingLabelText="User id"
+                  name="id"
+                  onChange = {this.handleChange}
+                />
+                <TextField
+                  hintText="Enter your name"
+                  floatingLabelText="User name"
+                  name="name"
+                  onChange = {this.handleChange}
+                />
+                <TextField
+                  hintText="Enter your Email"
+                  floatingLabelText="Email"
+                  name="email"
+                  onChange = {this.handleChange}
+                />
+                <br/>
+                <TextField
+                  type="password"
+                  hintText="Enter your Password"
+                  floatingLabelText="Password"
+                  name="password"
+                  onChange = {this.handleChange}
+                />
+                <br/>
+                <RaisedButton label="Submit" primary={true}  type="submit"/>
+              </form>
+            </div>
          </MuiThemeProvider>
       </div>
     );
-  }
+  } // render
+}// Register Page
+
+
+function mapStateToProps(state) {
+  const {alert} = state;
+  return {
+    alert,
+  };
 }
-const style = {
- margin: 15,
-};
-export default RegisterPage;
+
+const connectedRegisterPage = connect(mapStateToProps)(RegisterPage);
+export {connectedRegisterPage as RegisterPage};

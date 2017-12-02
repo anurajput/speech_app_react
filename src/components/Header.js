@@ -7,27 +7,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 export default class Header extends React.Component {
 
-	constructor(props) {
-      super(props);
-      
-      this.state = {
-         data: 'Initial data...',
-         name: 'Angel'
-      }
-      this.updateState = this.updateState.bind(this);
-      this.updateName  = this.updateName.bind(this);
-   	};
-
-   	updateState() {
-      this.setState({data: 'Data updated...'})
-  	};
-
-  	updateName(e) {
-      this.setState({name: e.target.value})
-  	};
-
-  	
-   	render() {
+	render() {
 
     return (
          <div>
@@ -41,7 +21,7 @@ export default class Header extends React.Component {
                     <FlatButton key={1} label="Login"  href="/user_login" />
                     <FlatButton key={2} label="Regiter" href="/register" />
                     <FlatButton key={3} label="Table" href="/dataTable" />
-                    <FlatButton key={4} label="Record Voice" href="/recordVoice" />
+                    <FlatButton key={4} label="Get API" href="/getAPI" />
                   </div>
                 }
                 />

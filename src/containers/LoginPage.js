@@ -71,32 +71,31 @@ class LoginPage extends React.Component {
   }
 
 render() {
-
-    return (
-      <div>
-        <MuiThemeProvider>
+  return (
+    <div>
+      <MuiThemeProvider>
+        <form name="form" onSubmit={this.handleSubmit}> 
           <div style={styles.Container}>
           <h3>Log In</h3>
-          <form name="form" onSubmit={this.handleSubmit}> 
             <TextField
-               hintText="Enter your Email"
-               floatingLabelText="Email"
-               name="email"
-               onChange={this.handleChange} 
-             />
+              hintText="Enter your Email"
+              floatingLabelText="Email"
+              name="email"
+              onChange={this.handleChange} 
+            />
             <br/>
             <TextField
-               type="password"
-               hintText="Enter your Password"
-               floatingLabelText="Password"
-               name="password"
-               onChange={this.handleChange} 
-               />
-             <br/>
+              type="password"
+              hintText="Enter your Password"
+              floatingLabelText="Password"
+              name="password"
+              onChange={this.handleChange} 
+            />
+            <br/>
             <RaisedButton label="Submit" primary={true} type="submit"/>
-          </form>
-         </div>
-         </MuiThemeProvider>
+          </div>
+        </form>
+      </MuiThemeProvider>
       </div>
     );
   }//render

@@ -33,7 +33,6 @@ const TableExampleSimple = () => (
         <TableRowColumn>Employed</TableRowColumn>
         <TableRowColumn>Employed</TableRowColumn>
       </TableRow>
-      
     </TableBody>
   </Table>
   </MuiThemeProvider>
