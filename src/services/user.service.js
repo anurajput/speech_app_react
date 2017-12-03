@@ -11,9 +11,12 @@ export const userService = {
   delete: _delete,
 };
 
+
+// 
+//------------------- Login -----------------
+//
+
 function login(email, password) {
-
-
   var body = `email=${email  }&password=${  password}`;
 
   const requestOptions = {
@@ -29,8 +32,7 @@ function login(email, password) {
           if (!response.ok) {
             return Promise.reject(response.statusText);
           }
-
-          return response.json();
+            return response.json();
         })
         .then((token_resp) => {
           console.log(`token_resp: ${  JSON.stringify(token_resp)}` );
@@ -55,11 +57,21 @@ function login(email, password) {
         });
 }
 
+
+
+// 
+//------------------- Logout  --------------------
+//
+
 function logout() {
     // remove user from local storage to log user out
   localStorage.removeItem('user');
 }
 
+
+// 
+//------------------- Request API --------------------
+//
 
 
 function getApi(token) {
@@ -72,25 +84,11 @@ function getApi(token) {
 }
 
 
-function getAll() {
-  const requestOptions = {
-    method: 'GET',
-    headers: authHeader(),
-  };
-
-  return fetch('/users', requestOptions).then(handleResponse);
-}
 
 
-
-function getById(id) {
-  const requestOptions = {
-    method: 'GET',
-    headers: authHeader(),
-  };
-
-  return fetch(`/users/${  id}`, requestOptions).then(handleResponse);
-}
+// 
+//------------------- Register --------------------
+//
 
 function register(user) {
   var body = `security_level=1&email=${user.email  }&password=${  user.password  }&id=${  user.id  }&name=${  user.name}`;
@@ -107,6 +105,46 @@ function register(user) {
   
 }
 
+
+// 
+//------------------- Request  list of users --------------------
+//
+
+
+function getAll() {
+  const requestOptions = {
+    method: 'GET',
+    headers: authHeader(),
+  };
+
+  return fetch('/users', requestOptions).then(handleResponse);
+}
+
+
+
+// 
+//------------------- Request  list of users by id --------------------
+//
+
+
+function getById(id) {
+  const requestOptions = {
+    method: 'GET',
+    headers: authHeader(),
+  };
+
+  return fetch(`/users/${  id}`, requestOptions).then(handleResponse);
+}
+
+
+
+
+
+
+// 
+//-------------------Update  user --------------------
+//
+
 function update(user) {
    /* const requestOptions = {
         method: 'PUT',
@@ -117,6 +155,11 @@ function update(user) {
     return fetch('/users/' + user.id, requestOptions).then(handleResponse);;
     */
 }
+
+
+// 
+//-------------------Delete  user --------------------
+//
 
 // prefixed function name with underscore because delete is a reserved word in javascript
 function _delete(id) {
@@ -129,6 +172,12 @@ function _delete(id) {
     */
 }
 
+
+// 
+//------------------- Response Handler --------------------
+//
+
+
 function handleResponse(response) {
   if (!response.ok) {
     return Promise.reject(response.statusText);
@@ -136,11 +185,10 @@ function handleResponse(response) {
   }
   
   return response.json()
+    .then((token_resp) => {
+        console.log(`token_resp: ${  JSON.stringify(token_resp)}` );
 
-   .then((token_resp) => {
-          console.log(`token_resp: ${  JSON.stringify(token_resp)}` );
-
-           });
+        });
 
 }
 

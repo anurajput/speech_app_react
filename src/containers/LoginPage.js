@@ -16,6 +16,9 @@ const styles = {
       right: 0,
       margin: 'auto',
      },
+  btn:{
+    marginLeft : 20,
+      },
   };
 
 //---------------------------------------------------
@@ -39,6 +42,7 @@ class LoginPage extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    // this.handleLogout = this.handleLogout.bind(this);
   }
 
   // ------------------------------------------------
@@ -50,6 +54,22 @@ class LoginPage extends React.Component {
     const {name, value} = e.target;
     this.setState({[name]: value});
   }
+
+
+  // ------------------------------------------------
+  // handleLogOut
+  // ------------------------------------------------
+  // handleLogout(e) {
+
+  //   console.log(`-- handleLogout ---`);
+
+  //   e.preventDefault();
+
+  //   const {dispatch} = this.props;
+  //   var history = this.props.history;
+
+  //   dispatch(userActions.logout(history));
+  // }
 
   // ------------------------------------------------
   // handleSubmit
@@ -92,7 +112,7 @@ render() {
               onChange={this.handleChange} 
             />
             <br/>
-            <RaisedButton label="Submit" primary={true} type="submit"/>
+            <RaisedButton label="Login" primary={true} type="submit"/>
           </div>
         </form>
       </MuiThemeProvider>

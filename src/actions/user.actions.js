@@ -12,6 +12,10 @@ export const userActions = {
   delete: _delete,
 };
 
+
+// 
+//------------------- Login -----------------
+//
 function login(history, email, password) {
   return (dispatch) => {
     dispatch(request({email}));
@@ -43,15 +47,27 @@ function login(history, email, password) {
   }
 }
 
-function logout() {
+
+
+// 
+//------------------- Logout  --------------------
+//
+
+function logout(history) {
   console.log('[user-action] logout');
 
   userService.logout();
+  history.push("/login");
 
   console.log('FIXME :: action:login: push /login ???');
-    
+ 
   return {type: userConstants.LOGOUT};
 }
+
+
+// 
+//------------------- Register --------------------
+//
 
 function register(history, user) {
   return (dispatch) => {
@@ -84,6 +100,11 @@ function register(history, user) {
 }
 
 
+
+// 
+//------------------- Request API --------------------
+//
+
 function getApi(history,token) {
   return (dispatch) => {
     dispatch(requestApi());
@@ -109,6 +130,12 @@ function getApi(history,token) {
   }
 }
 
+
+// 
+//-------------------Request  list of users --------------------
+//
+
+
 function getAll() {
   return (dispatch) => {
     dispatch(request());
@@ -133,7 +160,15 @@ function getAll() {
   }
 }
 
+
+
+// 
+//-------------------Delete  user --------------------
+//
+
 // prefixed function name with underscore because delete is a reserved word in javascript
+
+
 function _delete(id) {
   return (dispatch) => {
     dispatch(request(id));

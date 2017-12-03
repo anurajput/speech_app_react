@@ -28,6 +28,10 @@ const styles = {
 //---------------------------------------------------
 
 class RegisterPage extends React.Component {
+
+  // ------------------------------------------------
+  // constructor
+  // ------------------------------------------------
 constructor(props){
   super(props);
 
