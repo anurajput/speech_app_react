@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {HomePage} from "./containers/HomePage"
 import {LoginPage} from "./containers/LoginPage"
+import {LogoutPage} from "./containers/LogoutPage"
 import {RegisterPage} from "./containers/RegisterPage"
-import dataTablePage from "./containers/dataTablePage"
+import {DataTablePage} from "./containers/DataTablePage"
 import {GetAPIPage} from "./containers/getApi"
 
 import {connect} from 'react-redux';
@@ -17,8 +18,9 @@ class Routes extends Component {
               <Switch>
                   <Route exact path='/' component={HomePage} />
                   <Route exact path='/login' component={LoginPage} />
+                  <Route exact path='/logout' component={LogoutPage} />
                   <Route exact path='/register' component={RegisterPage} />
-                  <Route exact path='/dataTable' component={dataTablePage} />
+                  <Route exact path='/dataTable' component={DataTablePage} />
                   <Route exact path='/getAPI' component={GetAPIPage} />
                    
               </Switch>

@@ -16,7 +16,7 @@ export const userService = {
 //------------------- Login -----------------
 //
 
-function login(email, password) {
+function login(history,email, password) {
   var body = `email=${email  }&password=${  password}`;
 
   const requestOptions = {
@@ -51,6 +51,8 @@ function login(email, password) {
                 // to keep user logged in between page refreshes
                 // ------------------------------------------------------
             localStorage.setItem('user', JSON.stringify(user));
+            history.push('/');
+           
           }
 
           return user;
@@ -63,9 +65,11 @@ function login(email, password) {
 //------------------- Logout  --------------------
 //
 
-function logout() {
+function logout(history) {
     // remove user from local storage to log user out
   localStorage.removeItem('user');
+  localStorage.removeItem('API');
+  history.push("/login");
 }
 
 
@@ -80,7 +84,17 @@ function getApi(token) {
     headers: authHeader(),
   };
 
-  return fetch('http://52.230.8.132:8080/api/get_study_material?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidG9tQGdtYWlsLmNvbSIsImV4cCI6MTUxMjIxNzk3MX0.AZBg1IESyGwQU-UkyGWWUQsf2b5T3_sn63oND3PlBu8', requestOptions).then(handleResponse);
+
+
+  var user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        token = user.token;
+        console.log("token: " + token);
+       } else {
+        console.warn("failed to get token !~~");
+       }
+
+  return fetch('http://52.230.8.132:8080/api/get_study_material?token='+token, requestOptions).then(handleStudiesResponse);
 }
 
 
@@ -177,18 +191,33 @@ function _delete(id) {
 //------------------- Response Handler --------------------
 //
 
-
 function handleResponse(response) {
+  if (!response.ok) {
+    return Promise.reject(response.statusText);
+  }
+
+  return response.json();
+}
+
+
+
+function handleStudiesResponse(response) {
   if (!response.ok) {
     return Promise.reject(response.statusText);
    
   }
   
   return response.json()
-    .then((token_resp) => {
-        console.log(`token_resp: ${  JSON.stringify(token_resp)}` );
+    .then((resp) => {
 
-        });
+      console.log("printing resp....");
+      console.log("resp: " + JSON.stringify(resp) );
+
+      localStorage.setItem('studies', JSON.stringify(resp.studies));
+      return (` ${  JSON.stringify(resp)}` );
+      // console.log(`token_resp: ${  JSON.stringify(token_resp)}` );
+         
+          });
 
 }
 

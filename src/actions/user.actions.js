@@ -20,12 +20,12 @@ function login(history, email, password) {
   return (dispatch) => {
     dispatch(request({email}));
 
-    userService.login(email, password)
+    userService.login(history,email, password)
             .then(
                 (user) => {
                   dispatch(success(user));
                   console.log('FIXME :: action:login: push / ???');
-                  history.push('/');
+                  
                 },
                 (error) => {
                   dispatch(failure(error));
@@ -56,8 +56,8 @@ function login(history, email, password) {
 function logout(history) {
   console.log('[user-action] logout');
 
-  userService.logout();
-  history.push("/login");
+  userService.logout(history);
+  
 
   console.log('FIXME :: action:login: push /login ???');
  
@@ -113,7 +113,7 @@ function getApi(history,token) {
             .then(
                 (users) => {
                   dispatch(success(users));
-                  history.push('/');
+                  // history.push('/');
                 },
 
                 (error) => dispatch(failure(error))
