@@ -10,22 +10,23 @@ import {connect} from 'react-redux';
 
 export default class Header extends React.Component {
 
-    constructor(props) {
+
+  // ------------------------------------------------
+  // constructor
+  // ------------------------------------------------
+  constructor(props) {
       super(props);
-      //this.state = {};
-   
-    }
+      //this.state = {};  
+  }
 
+  // ------------------------------------------------
+  // render UI
+  // ------------------------------------------------
   render() {
-
     const {loggedIn} = this.props;
-    //var user = JSON.parse(localStorage.getItem('user'));
-
     console.log("Header got loggedIn: " + loggedIn);
+
     return (
-
-      
-
          <div>
             <MuiThemeProvider>
               <div>
@@ -48,7 +49,6 @@ function mapStateToProps(state) {
   //console.log("--- header got state: " + JSON.stringify(state));
 
   return state.authentication;
-  
 }
 
 const connectedHeaderPage = connect(mapStateToProps)(Header);
