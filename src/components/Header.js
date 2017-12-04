@@ -9,17 +9,30 @@ import {Loggedout} from "./Loggedout"
 import {connect} from 'react-redux';
 
 export default class Header extends React.Component {
-  
+
+    constructor(props) {
+      super(props);
+      //this.state = {};
+   
+    }
+
   render() {
-    var user = JSON.parse(localStorage.getItem('user'));
+
+    const {loggedIn} = this.props;
+    //var user = JSON.parse(localStorage.getItem('user'));
+
+    console.log("Header got loggedIn: " + loggedIn);
     return (
+
+      
+
          <div>
             <MuiThemeProvider>
               <div>
                 <AppBar
                   title="SPEECH TEST"
-                  showMenuIconButton="true"
-                  iconElementRight={user ?<Loggedin /> :  <Loggedout />}
+                  showMenuIconButton={true}
+                  iconElementRight={loggedIn ? <Loggedin /> :  <Loggedout />}
                 />
 
               </div>
@@ -31,10 +44,11 @@ export default class Header extends React.Component {
 
 
 function mapStateToProps(state) {
-  const {alert,user} = state;
-  return {
-    alert,user
-  };
+  //const {alert,user,loggedIn} = state;
+  //console.log("--- header got state: " + JSON.stringify(state));
+
+  return state.authentication;
+  
 }
 
 const connectedHeaderPage = connect(mapStateToProps)(Header);

@@ -58,15 +58,15 @@ class HomePage extends React.Component {
               </TableRow>
             </TableHeader>
           <TableBody>
-          {studies.map(function(study){
+          {studies && studies.map(function(study, i){
             return(
-              <TableRow  >
+              <TableRow key={study.id} >
                 console.log("got study: " + study.Date_of_Upload);
-                <TableRowColumn>{study.id}</TableRowColumn>
-                <TableRowColumn>{study.Date_of_Upload}</TableRowColumn>
-                <TableRowColumn>Employed</TableRowColumn>
-                <TableRowColumn>Employed</TableRowColumn>
-                <TableRowColumn>Employed</TableRowColumn>
+                <TableRowColumn>{i+1}</TableRowColumn>
+                <TableRowColumn>{study.created_at}</TableRowColumn>
+                <TableRowColumn>{study.Speaker}</TableRowColumn>
+                <TableRowColumn>{study.GCS_Acc}</TableRowColumn>
+                <TableRowColumn>{study.GCS_Conf}</TableRowColumn>
               </TableRow>
              );
            })}
@@ -79,9 +79,9 @@ class HomePage extends React.Component {
 
 
 function mapStateToProps(state) {
-  const {alert} = state;
+  const {alert, loggedIn} = state;
   return {
-    alert,
+    alert, loggedIn
   };
 }
  

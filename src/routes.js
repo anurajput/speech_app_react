@@ -33,9 +33,9 @@ class Routes extends Component {
 
 
 function mapStateToProps(state) {
-  const {alert} = state;
+  const {alert, loggedIn} = state;
   return {
-    alert,
+    alert, loggedIn
   };
 }
 
