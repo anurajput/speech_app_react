@@ -20,7 +20,8 @@ class Loggedin extends React.Component {
     render() {
     return (
       <div>
-        <FlatButton style={styles.mybtn} label="Logout"  href="/logout" />
+        <FlatButton style={styles.mybtn} label="HOME"  href="/" />
+        <FlatButton style={styles.mybtn} label="LOGOUT"  href="/logout" />
       </div>
     );
   }
