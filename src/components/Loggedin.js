@@ -4,26 +4,23 @@ import FlatButton from 'material-ui/FlatButton';
 import {connect} from 'react-redux';
 
 
-
-
+const styles = {  
+  mybtn: {
+      color: 'white'
+     }
+  };
 
 
 class Loggedin extends React.Component {
   static muiName = 'FlatButton';
 
   // ------------------------------------------------
-  // constructor
+  // render UI
   // ------------------------------------------------
-  
-
-  
-
-  render() {
+    render() {
     return (
       <div>
-        <FlatButton  label="Logout"  href="/logout" />
-        <FlatButton  label="Table"   href="/dataTable" />
-        <FlatButton  label="Get API" href="/getAPI" />
+        <FlatButton style={styles.mybtn} label="Logout"  href="/logout" />
       </div>
     );
   }

@@ -4,8 +4,9 @@ import {HomePage} from "./containers/HomePage"
 import {LoginPage} from "./containers/LoginPage"
 import {LogoutPage} from "./containers/LogoutPage"
 import {RegisterPage} from "./containers/RegisterPage"
-import {DataTablePage} from "./containers/DataTablePage"
+//import {DataTablePage} from "./containers/DataTablePage"
 import {GetAPIPage} from "./containers/getApi"
+import {SpeechApp} from "./containers/SpeechApp"
 
 import {connect} from 'react-redux';
 
@@ -20,8 +21,8 @@ class Routes extends Component {
                   <Route exact path='/login' component={LoginPage} />
                   <Route exact path='/logout' component={LogoutPage} />
                   <Route exact path='/register' component={RegisterPage} />
-                  <Route exact path='/dataTable' component={DataTablePage} />
                   <Route exact path='/getAPI' component={GetAPIPage} />
+                  <Route exact path='/speechApp' component={SpeechApp} />
                    
               </Switch>
             </div>

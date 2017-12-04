@@ -18,7 +18,7 @@ export default class Header extends React.Component {
               <div>
                 <AppBar
                   title="SPEECH TEST"
-                  iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+                  showMenuIconButton="true"
                   iconElementRight={user ?<Loggedin /> :  <Loggedout />}
                 />
 

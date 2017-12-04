@@ -18,6 +18,7 @@ import {
 class DataTablePage extends React.Component {
   constructor(props){
     super(props);
+    
 
     const {dispatch} = this.props;
 
@@ -25,45 +26,50 @@ class DataTablePage extends React.Component {
     var history = this.props.history;
     dispatch(userActions.getApi(history));
 
-   
+    this.handleRowSelection = this.handleRowSelection.bind(this);
+        
+    }
 
+  handleRowSelection = (selectedRows) => {
     
- }
+    console.log("row is selected");
+     var history = this.props.history;
+    this.props.history.push('/speechApp');
+  };
+
     render() {
      var  studies = JSON.parse(localStorage.getItem('studies'));
-       console.log("studies",studies);
       return (
-
-  <MuiThemeProvider>
-  <Table>
-    <TableHeader>
-      <TableRow>
-        <TableHeaderColumn>#</TableHeaderColumn>
-        <TableHeaderColumn>Date</TableHeaderColumn>
-        <TableHeaderColumn>Type</TableHeaderColumn>
-        <TableHeaderColumn>Word</TableHeaderColumn>
-        <TableHeaderColumn>Status</TableHeaderColumn>
-      </TableRow>
-    </TableHeader>
-    <TableBody>
-      {studies.map(function(study){
-        return(
-          <TableRow>
-            console.log("got study: " + study.Date_of_Upload);
-            <TableRowColumn>{study.id}</TableRowColumn>
-            <TableRowColumn>{study.Date_of_Upload}</TableRowColumn>
-            <TableRowColumn>Employed</TableRowColumn>
-            <TableRowColumn>Employed</TableRowColumn>
-            <TableRowColumn>Employed</TableRowColumn>
-          </TableRow>
-          );
-      })}
-    </TableBody>
-  </Table>
-  </MuiThemeProvider>
-);
-}
-}
+        <MuiThemeProvider>
+          <Table onRowSelection={this.handleRowSelection}>
+            <TableHeader>
+              <TableRow>
+                <TableHeaderColumn>#</TableHeaderColumn>
+                <TableHeaderColumn>Date</TableHeaderColumn>
+                <TableHeaderColumn>Type</TableHeaderColumn>
+                <TableHeaderColumn>Word</TableHeaderColumn>
+                <TableHeaderColumn>Status</TableHeaderColumn>
+              </TableRow>
+            </TableHeader>
+          <TableBody>
+          {studies.map(function(study){
+            return(
+              <TableRow  >
+                console.log("got study: " + study.Date_of_Upload);
+                <TableRowColumn>{study.id}</TableRowColumn>
+                <TableRowColumn>{study.Date_of_Upload}</TableRowColumn>
+                <TableRowColumn>Employed</TableRowColumn>
+                <TableRowColumn>Employed</TableRowColumn>
+                <TableRowColumn>Employed</TableRowColumn>
+              </TableRow>
+             );
+           })}
+          </TableBody>
+        </Table>
+      </MuiThemeProvider>
+      );
+    }
+    }
 
 
 function mapStateToProps(state) {

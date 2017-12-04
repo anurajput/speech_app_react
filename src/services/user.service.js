@@ -217,7 +217,7 @@ function handleStudiesResponse(response) {
       return (` ${  JSON.stringify(resp)}` );
       // console.log(`token_resp: ${  JSON.stringify(token_resp)}` );
          
-          });
+   });
 
 }
 
