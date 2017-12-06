@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {userActions} from '../actions';
+import {studyActions} from '../actions';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {
@@ -18,17 +18,20 @@ import {
 class HomePage extends React.Component {
   constructor(props){
     super(props);
-    
+  }    
+
+
+  componentDidMount() {
     const {dispatch} = this.props;
 
-
     var user = JSON.parse(localStorage.getItem('user'));
+
     if (!user) {
             this.props.history.push('/login');
+
     } else {
       console.log('dispatching -> get api');
-      var history = this.props.history;
-      dispatch(userActions.getApi(history));
+      dispatch(studyActions.getAll());
     }
 
     
@@ -37,14 +40,50 @@ class HomePage extends React.Component {
   }
 
   handleRowSelection = (selectedRows) => {
-    
+
     console.log("row is selected");
-     var history = this.props.history;
-    this.props.history.push('/speechApp');
+    this.props.history.push('/speechTest');
   };
 
     render() {
-     var  studies = JSON.parse(localStorage.getItem('studies'));
+     // var  studies = JSON.parse(localStorage.getItem('studies'));
+     console.log("props: " +this.props);
+     //var {studies} = this.props;
+
+
+
+     console.log("--- Home Page render got studies:" + JSON.stringify(this.props.studies) );
+     
+     var t = typeof this.props.studies;
+
+     console.log("--- type:" + t  + ", len: " + this.props.studies.length);
+
+     var n = [1];
+     var t1 = typeof n;
+
+     console.log("--- t1:" + t1 + ", len: " + n.length);
+
+     //----------------------------
+     // fill up studies table data
+     //----------------------------
+     var tableBody = [];
+      if(this.props.studies) {
+       for(var i=0; i < this.props.studies.length; i++) {
+          console.log("study " + (i+1) + ":" + JSON.stringify(this.props.studies[i]));
+          var study = this.props.studies[i];
+          tableBody.push(
+                  <TableRow key={study.id} >
+                  console.log("got study: " + study.Date_of_Upload);
+                  <TableRowColumn>{i+1}</TableRowColumn>
+                  <TableRowColumn>{study.created_at}</TableRowColumn>
+                  <TableRowColumn>{study.Speaker}</TableRowColumn>
+                  <TableRowColumn>{study.GCS_Acc}</TableRowColumn>
+                  <TableRowColumn>{study.GCS_Conf}</TableRowColumn>
+                </TableRow>
+                );
+         }
+       }
+
       return (
         <MuiThemeProvider>
           <Table onRowSelection={this.handleRowSelection}>
@@ -58,18 +97,7 @@ class HomePage extends React.Component {
               </TableRow>
             </TableHeader>
           <TableBody>
-          {studies && studies.map(function(study, i){
-            return(
-              <TableRow key={study.id} >
-                console.log("got study: " + study.Date_of_Upload);
-                <TableRowColumn>{i+1}</TableRowColumn>
-                <TableRowColumn>{study.created_at}</TableRowColumn>
-                <TableRowColumn>{study.Speaker}</TableRowColumn>
-                <TableRowColumn>{study.GCS_Acc}</TableRowColumn>
-                <TableRowColumn>{study.GCS_Conf}</TableRowColumn>
-              </TableRow>
-             );
-           })}
+          {tableBody}
           </TableBody>
         </Table>
       </MuiThemeProvider>
@@ -79,9 +107,13 @@ class HomePage extends React.Component {
 
 
 function mapStateToProps(state) {
-  const {alert, loggedIn} = state;
+  //const {alert,user,loggedIn} = state;
+  console.log("--- Home Page got state: " + JSON.stringify(state));
+  console.log("--- Home Page got studies: " + JSON.stringify(state.studies.studies) );
+
+
   return {
-    alert, loggedIn
+    studies: state.studies
   };
 }
  

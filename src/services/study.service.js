@@ -1,6 +1,8 @@
+import {authHeader} from '../helpers';
+
 export const studyService = {
     getAll,
-    getById
+    
 };
 
 function getAll(token) {
@@ -17,24 +19,17 @@ function getAll(token) {
         console.warn("failed to get token !~~");
     }
 
-    return fetch('http://52.230.8.132:8080/api/get_study_material?token='+token, requestOptions).then(handleStudiesResponse);
-}
+    var url = 'http://52.230.8.132:8080/api/get_study_material?token='+token;
 
-
-function handleStudiesResponse(response) {
-    if (!response.ok) {
-        return Promise.reject(response.statusText);
-
-    }
-
-    return response.json()
-        .then((resp) => {
-
+    return fetch(url, requestOptions)
+        .then(function(response) {
+            if (!response.ok) {
+                return Promise.reject(response.statusText);
+            }   
+            return response.json();
+        })
+        .then(function(resp) {
             console.log("study.service :: handleStudiesResponse(), resp: " + JSON.stringify(resp) );
-
-            localStorage.setItem('studies', JSON.stringify(resp.studies));
-            return (` ${  JSON.stringify(resp)}` );
-            // console.log(`token_resp: ${  JSON.stringify(token_resp)}` );
-
+            return resp.studies;
         });
 }

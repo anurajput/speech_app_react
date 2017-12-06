@@ -1,4 +1,4 @@
-export const userConstants = {
+export const studyConstants = {
  
   GETALL_REQUEST: 'STUDIES_GETALL_REQUEST',
   GETALL_SUCCESS: 'STUDIES_GETALL_SUCCESS',
