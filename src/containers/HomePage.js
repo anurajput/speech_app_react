@@ -31,7 +31,7 @@ class HomePage extends React.Component {
 
     } else {
       console.log('dispatching -> get api');
-      dispatch(studyActions.getAll());
+      dispatch(studyActions.getAll(this.props.history));
     }
 
     

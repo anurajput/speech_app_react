@@ -30,6 +30,6 @@ function getAll(token) {
         })
         .then(function(resp) {
             console.log("study.service :: handleStudiesResponse(), resp: " + JSON.stringify(resp) );
-            return resp.studies;
+            return resp;
         });
 }

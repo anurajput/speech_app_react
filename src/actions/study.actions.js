@@ -9,18 +9,36 @@ export const studyActions = {getAll };
 //------------------- Request API --------------------
 //
 
-function getAll() {
+function getAll(history) {
   return (dispatch) => {
     dispatch(requestAll());
 
     studyService.getAll()
             .then(
                 (studies) => {
-                  dispatch(success(studies));
+                  console.log("study actions dispatching studies: " + studies);
+
+                  if(!studies.studies) {
+
+                      // FIXME - remote this ugly code later
+                     if(studies.message == "Invalid token!") {
+                        console.log("--- token expired, should redirect to login...");
+                        localStorage.removeItem('user');
+                        history.push("/login");
+                     }
+                  }
+
+                  dispatch(success(studies.studies));
                 },
 
-                (error) => dispatch(failure(error))
-            );
+                (error) => {
+                  console.log("study actions dispatching error: " + error);
+                  dispatch(failure(error));
+                }
+            )
+            .catch(function(error){
+              console.log("study actions -> getAll got error: " + error);
+            }); 
   };
   function requestAll() {
     return {type: studyConstants.GETALL_REQUEST};
