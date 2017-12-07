@@ -48,7 +48,7 @@ class HomePage extends React.Component {
   // handleRowSelection
   // ------------------------
   handleRowSelection = (selectedRows) => {
-    console.log("row is selected");
+    console.log("row is selected, selectedRows=" + selectedRows );
     this.props.history.push('/speechTest');
   };
 
@@ -70,7 +70,7 @@ class HomePage extends React.Component {
           tableBody.push(
                   <TableRow key={study.id} >
                   console.log("got study: " + study.Date_of_Upload);
-                  <TableRowColumn>{i+1}</TableRowColumn>
+                  <TableRowColumn>{study.id}</TableRowColumn>
                   <TableRowColumn>{study.created_at}</TableRowColumn>
                   <TableRowColumn>{study.Speaker}</TableRowColumn>
                   <TableRowColumn>{study.Word_Count}</TableRowColumn>

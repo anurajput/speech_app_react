@@ -5,7 +5,7 @@ import {LoginPage} from "./containers/LoginPage"
 import {LogoutPage} from "./containers/LogoutPage"
 import {RegisterPage} from "./containers/RegisterPage"
 import {SpeechTestPage} from "./containers/SpeechTestPage"
-// import {AudioRecorder} from "./containers/AudioRecorder"
+import {TestPage} from "./containers/TestPage"
 
 import {connect} from 'react-redux';
 
@@ -21,6 +21,8 @@ class Routes extends Component {
                   <Route exact path='/logout' component={LogoutPage} />
                   <Route exact path='/register' component={RegisterPage} />
                   <Route exact path='/speechTest' component={SpeechTestPage} />
+
+                  <Route exact path='/test' component={TestPage} />
                    
               </Switch>
             </div>
