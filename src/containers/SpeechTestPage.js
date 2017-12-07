@@ -71,6 +71,17 @@ class SpeechTestPage extends React.Component {
   }
    
   render() {
+
+    var paragraphText = '';
+
+    if(this.props.studies && this.props.selectedStudy) {
+      // use first element of selectedStudy
+      const study = this.props.studies[this.props.selectedStudy[0]];
+      console.log(">>>>>>>>> SpeechTestPage got study: " + JSON.stringify(study) );
+
+      if(study) { paragraphText = study.Paragraph_Text; }
+    }
+
     return (
       <div>
         <MuiThemeProvider>
@@ -79,11 +90,7 @@ class SpeechTestPage extends React.Component {
               <Paper zDepth={3} style={styles.paperLeft}>
                 <h4>Paragraph</h4>
                 <p>
-                  This is a text that you should speak and I will check its accuracy with google speech APIS.
-                  This is a text that you should speak and I will check its accuracy with google speech APIS.
-                  This is a text that you should speak and I will check its accuracy with google speech APIS.
-                  This is a text that you should speak and I will check its accuracy with google speech APIS.
-                  This is a text that you should speak and I will check its accuracy with google speech APIS.
+                  {paragraphText}
                 </p>
               </Paper>
               <Paper zDepth={3} style={styles.paperRight}>
@@ -104,7 +111,8 @@ class SpeechTestPage extends React.Component {
 function mapStateToProps(state) {
   console.log(")====> SpeechTestPage got state: " + JSON.stringify(state) );
   return {
-    studies: state.studies
+    studies: state.studies,
+    selectedStudy: state.selectedStudy
   };
 
 }
