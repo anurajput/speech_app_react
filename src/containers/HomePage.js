@@ -77,8 +77,8 @@ class HomePage extends React.Component {
                   <TableRowColumn>{i+1}</TableRowColumn>
                   <TableRowColumn>{study.created_at}</TableRowColumn>
                   <TableRowColumn>{study.Speaker}</TableRowColumn>
-                  <TableRowColumn>{study.GCS_Acc}</TableRowColumn>
-                  <TableRowColumn>{study.GCS_Conf}</TableRowColumn>
+                  <TableRowColumn>{study.Word_Count}</TableRowColumn>
+                  <TableRowColumn>{study.Status}</TableRowColumn>
                 </TableRow>
                 );
          }
