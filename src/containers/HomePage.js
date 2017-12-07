@@ -75,7 +75,7 @@ class HomePage extends React.Component {
                   console.log("got study: " + study.Date_of_Upload);
                   <TableRowColumn>{study.id}</TableRowColumn>
                   <TableRowColumn>{study.created_at}</TableRowColumn>
-                  <TableRowColumn>{study.Speaker}</TableRowColumn>
+                  <TableRowColumn>{study.Paragraph_Type}</TableRowColumn>
                   <TableRowColumn>{study.Word_Count}</TableRowColumn>
                   <TableRowColumn>{study.Status}</TableRowColumn>
                 </TableRow>
