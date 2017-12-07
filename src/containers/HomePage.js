@@ -78,6 +78,8 @@ class HomePage extends React.Component {
                   <TableRowColumn>{study.Paragraph_Type}</TableRowColumn>
                   <TableRowColumn>{study.Word_Count}</TableRowColumn>
                   <TableRowColumn>{study.Status}</TableRowColumn>
+                  <TableRowColumn>{study.GCS_Acc}</TableRowColumn>
+                  <TableRowColumn>{study.GCS_Conf}</TableRowColumn>
                 </TableRow>
                 );
          }
@@ -93,6 +95,8 @@ class HomePage extends React.Component {
                 <TableHeaderColumn>Type</TableHeaderColumn>
                 <TableHeaderColumn>Word</TableHeaderColumn>
                 <TableHeaderColumn>Status</TableHeaderColumn>
+                <TableHeaderColumn>GCS%</TableHeaderColumn>
+                <TableHeaderColumn>GCS conf</TableHeaderColumn>
               </TableRow>
             </TableHeader>
           <TableBody>
