@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {studyActions} from '../actions';
-
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {
   Table,
@@ -12,57 +11,54 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 
-/**
- * A simple table demonstrating the hierarchy of the `Table` component and its sub-components.
- */
+
+//----------------------------------------------------------------
+//
+//          HOME PAGE
+//
+//----------------------------------------------------------------
 class HomePage extends React.Component {
+
+  // ------------------------
+  // constructor
+  // ------------------------
   constructor(props){
     super(props);
   }    
 
-
+  // ------------------------
+  // componentDidMount
+  // ------------------------
   componentDidMount() {
     const {dispatch} = this.props;
 
     var user = JSON.parse(localStorage.getItem('user'));
 
     if (!user) {
-            this.props.history.push('/login');
-
+      this.props.history.push('/login');
     } else {
       console.log('dispatching -> get api');
       dispatch(studyActions.getAll(this.props.history));
     }
-
     
-    this.handleRowSelection = this.handleRowSelection.bind(this);
-        
+    this.handleRowSelection = this.handleRowSelection.bind(this);   
   }
 
+  // ------------------------
+  // handleRowSelection
+  // ------------------------
   handleRowSelection = (selectedRows) => {
-
     console.log("row is selected");
     this.props.history.push('/speechTest');
   };
 
-    render() {
-     // var  studies = JSON.parse(localStorage.getItem('studies'));
-     console.log("props: " +this.props);
-     //var {studies} = this.props;
+  // ------------------------
+  // render
+  // ------------------------
+  render() {
 
-
-
-     console.log("--- Home Page render got studies:" + JSON.stringify(this.props.studies) );
+    console.log("--- Home Page render got studies:" + JSON.stringify(this.props.studies) );
      
-     var t = typeof this.props.studies;
-
-     console.log("--- type:" + t  + ", len: " + this.props.studies.length);
-
-     var n = [1];
-     var t1 = typeof n;
-
-     console.log("--- t1:" + t1 + ", len: " + n.length);
-
      //----------------------------
      // fill up studies table data
      //----------------------------
@@ -102,20 +98,16 @@ class HomePage extends React.Component {
         </Table>
       </MuiThemeProvider>
       );
-    }
-    }
-
+  }//render
+}//HomePage
 
 function mapStateToProps(state) {
-  //const {alert,user,loggedIn} = state;
-  console.log("--- Home Page got state: " + JSON.stringify(state));
-  console.log("--- Home Page got studies: " + JSON.stringify(state.studies.studies) );
-
-
+  //console.log("--- Home Page got studies: " + JSON.stringify(state.studies.studies) );
   return {
     studies: state.studies
   };
 }
  
 const connectedHomePage = connect(mapStateToProps)(HomePage);
+
 export { connectedHomePage as HomePage };

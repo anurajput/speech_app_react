@@ -26,16 +26,15 @@ const styles = {
 //         REGISTER PAGE
 //
 //---------------------------------------------------
-
 class RegisterPage extends React.Component {
 
-  // ------------------------------------------------
+  // ------------------------
   // constructor
-  // ------------------------------------------------
-constructor(props){
-  super(props);
+  // ------------------------
+  constructor(props){
+    super(props);
 
- this.state = {
+    this.state = {
             user: {
                 id: '',
                 name: '',
@@ -43,17 +42,16 @@ constructor(props){
                 password: ''
             },
             submitted: false
-        };
+    };
  
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-  // ------------------------------------------------
+  // ------------------------
   // handleChange
-  // ------------------------------------------------
- 
-    handleChange(event) {
+  // ------------------------
+  handleChange(event) {
       console.log(`-- handleChange, target: ${event.target.name}`);
         const { name, value } = event.target;
         const { user } = this.state;
@@ -63,13 +61,12 @@ constructor(props){
                 [name]: value
             }
         });
-    }
+  }
 
-  // ------------------------------------------------
+  // ------------------------
   // handleSubmit
-  // ------------------------------------------------
- 
-    handleSubmit(event) {
+  // ------------------------
+  handleSubmit(event) {
         event.preventDefault();
        
         this.setState({ submitted: true });
@@ -83,8 +80,10 @@ constructor(props){
         }
     }
 
-
-render() {
+  // ------------------------
+  // render
+  // ------------------------
+  render() {
     return (
       <div>
         <MuiThemeProvider>

@@ -2,10 +2,13 @@ import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-
 import {connect} from 'react-redux';
 import {userActions} from '../actions';
 
+
+// ------------------------
+// styles
+// ------------------------
 const styles = {  
   Container: {
       minWidth: 320,
@@ -31,9 +34,9 @@ const styles = {
 //---------------------------------------------------
 class LoginPage extends React.Component {
 
-  // ------------------------------------------------
+  // ------------------------
   // constructor
-  // ------------------------------------------------
+  // ------------------------
   constructor(props){
     super(props);
 
@@ -48,9 +51,9 @@ class LoginPage extends React.Component {
     // this.handleLogout = this.handleLogout.bind(this);
   }
 
-  // ------------------------------------------------
+  // ------------------------
   // handleChange
-  // ------------------------------------------------
+  // ------------------------
   handleChange(e) {
     console.log(`-- handleChange, target: ${e.target.name}`);
 
@@ -58,25 +61,9 @@ class LoginPage extends React.Component {
     this.setState({[name]: value});
   }
 
-
-  // ------------------------------------------------
-  // handleLogOut
-  // ------------------------------------------------
-  // handleLogout(e) {
-
-  //   console.log(`-- handleLogout ---`);
-
-  //   e.preventDefault();
-
-  //   const {dispatch} = this.props;
-  //   var history = this.props.history;
-
-  //   dispatch(userActions.logout(history));
-  // }
-
-  // ------------------------------------------------
+  // ------------------------
   // handleSubmit
-  // ------------------------------------------------
+  // ------------------------
   handleSubmit(e) {
     e.preventDefault();
 
@@ -93,6 +80,9 @@ class LoginPage extends React.Component {
     }
   }
 
+// ------------------------
+// render
+// ------------------------
 render() {
   return (
     <div>

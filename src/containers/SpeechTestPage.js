@@ -2,12 +2,6 @@ import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
-
- 
-
-
-
-
 import {connect} from 'react-redux';
 
 
@@ -32,22 +26,19 @@ const styles = {
     margin: 10,
     textAlign: 'center',
   }
-  };
-
+};//styles
 
 
 //---------------------------------------------------
 //
-//         Get API
+//        SPEECH TEST PAGE
 //
 //---------------------------------------------------
-
-
 class SpeechTestPage extends React.Component {
 
-  // ------------------------------------------------
+  // ------------------------
   // constructor
-  // ------------------------------------------------
+  // ------------------------
   constructor(props) {
     super(props);
 
@@ -107,7 +98,7 @@ class SpeechTestPage extends React.Component {
       </div>
     );
   }//render
-}//GetAPIPage
+}//SpeechTestPage
 
 
 function mapStateToProps(state) {
