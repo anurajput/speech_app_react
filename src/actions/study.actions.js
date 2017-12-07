@@ -3,7 +3,10 @@ import {studyService} from '../services';
 
 
 
-export const studyActions = {getAll };
+export const studyActions = {
+  getAll,
+  selectedStudy
+};
 
 // 
 //------------------- Request API --------------------
@@ -16,7 +19,7 @@ function getAll(history) {
     studyService.getAll()
             .then(
                 (studies) => {
-                  console.log("study actions dispatching studies: " + studies);
+                  //console.log("study actions dispatching studies: " + studies);
 
                   if(!studies.studies) {
 
@@ -44,7 +47,7 @@ function getAll(history) {
     return {type: studyConstants.GETALL_REQUEST};
   }
    function success(studies) {
-    console.log("---> success for studies: " + studies);
+    //console.log("---> success for studies: " + studies);
 
     return {type: studyConstants.GETALL_SUCCESS, studies};
   }
@@ -53,3 +56,11 @@ function getAll(history) {
   }
 }
 
+
+function selectedStudy(key){
+    console.log("++++ study actions, selectedStudy() key: ", key);
+    return {
+        type: studyConstants.STUDY_SELECTED,
+        payload: key
+    }
+}

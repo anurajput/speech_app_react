@@ -102,10 +102,11 @@ class SpeechTestPage extends React.Component {
 
 
 function mapStateToProps(state) {
-  const {alert} = state;
+  console.log(")====> SpeechTestPage got state: " + JSON.stringify(state) );
   return {
-    alert,
+    studies: state.studies
   };
+
 }
 
 const connectedSpeechTestPage= connect(mapStateToProps)(SpeechTestPage);

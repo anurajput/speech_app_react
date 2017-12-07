@@ -47,8 +47,11 @@ class HomePage extends React.Component {
   // ------------------------
   // handleRowSelection
   // ------------------------
-  handleRowSelection = (selectedRows) => {
-    console.log("row is selected, selectedRows=" + selectedRows );
+  handleRowSelection = (key) => {
+    const {dispatch} = this.props;
+    dispatch(studyActions.selectedStudy(key));
+
+    console.log("row is selected, key=" + key);
     this.props.history.push('/speechTest');
   };
 
@@ -65,7 +68,7 @@ class HomePage extends React.Component {
      var tableBody = [];
       if(this.props.studies) {
        for(var i=0; i < this.props.studies.length; i++) {
-          console.log("study " + (i+1) + ":" + JSON.stringify(this.props.studies[i]));
+          //console.log("study " + (i+1) + ":" + JSON.stringify(this.props.studies[i]));
           var study = this.props.studies[i];
           tableBody.push(
                   <TableRow key={study.id} >
@@ -102,6 +105,7 @@ class HomePage extends React.Component {
 }//HomePage
 
 function mapStateToProps(state) {
+  console.log("]----> Home Page got state: " + JSON.stringify(state));
   //console.log("--- Home Page got studies: " + JSON.stringify(state.studies.studies) );
   return {
     studies: state.studies

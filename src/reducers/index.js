@@ -5,7 +5,7 @@ import {registration} from './registration.reducer';
 import {users} from './users.reducer';
 import {alert} from './alert.reducer';
 import {studies} from './studies.reducer';
-
+import {selectedStudy} from './selectedstudy.reducer';
 
 const rootReducer = combineReducers({
   authentication,
@@ -13,6 +13,7 @@ const rootReducer = combineReducers({
   users,
   alert,
   studies,
+  selectedStudy
 });
 
 export default rootReducer;
