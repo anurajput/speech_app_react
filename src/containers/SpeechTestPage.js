@@ -177,7 +177,7 @@ class SpeechTestPage extends React.Component {
                 STEP-1: <RaisedButton label="RECORD" primary={true} onClick={this.startRecording}/> <RaisedButton label="STOP" primary={true} onClick={this.stopRecording}/><br /><br /><br />
                 STEP-2: <RaisedButton label="PLAY" primary={true} onClick={this.playRecording}/><br /><br /><br />
                 STEP-3: <RaisedButton label="SAVE" primary={true} onClick={this.saveRecording}/><br /><br /><br />
-                <audio id="recordedAudio"></audio>
+                <audio id="recordedAudio"></audio><br />
                 <a id="audioDownload"></a>
               </Paper>
             </div>
