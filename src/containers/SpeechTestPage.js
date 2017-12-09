@@ -114,13 +114,17 @@ class SpeechTestPage extends React.Component {
       page.audioChunks.push(e.data);
       if (page.rec.state == "inactive"){
         
-        let blob = new Blob(page.audioChunks,{type:'audio/x-mpeg-3'});
+        //page.blob = new Blob(page.audioChunks,{type:'audio/x-mpeg-3'});
+        page.blob = new Blob(page.audioChunks,{type:'audio/wav'});
         
-        recordedAudio.src       = URL.createObjectURL(blob);
+        recordedAudio.src       = URL.createObjectURL(page.blob);
         recordedAudio.controls  = true;
         recordedAudio.autoplay  = false;
         
         audioDownload.href      = recordedAudio.src;
+
+        console.log("---> audio src: " + recordedAudio.src);
+
         audioDownload.download  = 'mp3';
         audioDownload.innerHTML = 'download';
       }
@@ -147,6 +151,55 @@ class SpeechTestPage extends React.Component {
 
   saveRecording() {
     console.log("-- saveRecording --");
+
+    //var rec_file      = document.getElementById("rec_file");
+    //rec_file.data     = this.blob;
+
+
+    //var dataFile = new File(this.blob, "rec_file");
+
+    var form = new FormData(document.getElementById("my_form"));
+    //form.append("rec_file", dataFile);
+    form.append("text", "hello");
+    form.append("rec_file", this.blob, "rec_data1.wav");
+
+    //form.append("rec_file", rec_file, "rec_file");
+
+
+    var request = new XMLHttpRequest();
+    var async = true;
+    request.open("POST", "http://52.230.8.132:8080/api/matching_test", async);
+    if (async) {
+        request.onreadystatechange = function() {
+            if(request.readyState == 4 && request.status == 200) {
+                var response = null;
+                try {
+                    response = JSON.parse(request.responseText);
+                } catch (e) {
+                    response = request.responseText;
+                }
+                //uploadFormCallback(response);
+                console.log("--- response: " + JSON.stringify(response) );
+            }
+        }
+    }
+    request.send(form);
+
+  }
+
+  saveRecording1() {
+    console.log("-- saveRecording --");
+
+    var form1      = document.getElementById("form1");
+    var rec_file   = document.getElementById("rec_file");
+    rec_file.data  = this.blob;
+
+    form1.submit();
+
+    console.log("-- saveRecording done --");
+
+        return true;
+
   }
    
   render() {
@@ -174,11 +227,14 @@ class SpeechTestPage extends React.Component {
               </Paper>
               <Paper zDepth={3} style={styles.paperRight}>
                 <h4>Record & Test</h4>
+                <form id="form1" action="http://52.230.8.132:8080/api/matching_test"  enctype="multipart/form-data" method="post"  >
+                <input type="hidden" name="text" value="text" />
                 STEP-1: <RaisedButton label="RECORD" primary={true} onClick={this.startRecording}/> <RaisedButton label="STOP" primary={true} onClick={this.stopRecording}/><br /><br /><br />
                 STEP-2: <RaisedButton label="PLAY" primary={true} onClick={this.playRecording}/><br /><br /><br />
-                STEP-3: <RaisedButton label="SAVE" primary={true} onClick={this.saveRecording}/><br /><br /><br />
+                STEP-3: <RaisedButton label="SAVE" primary={true}  onClick={this.saveRecording} /><br /><br /><br />
                 <audio id="recordedAudio"></audio><br />
                 <a id="audioDownload"></a>
+                </form>
               </Paper>
             </div>
           </div>
