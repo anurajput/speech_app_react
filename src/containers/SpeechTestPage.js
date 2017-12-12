@@ -115,12 +115,13 @@ class SpeechTestPage extends React.Component {
       if (page.rec.state == "inactive"){
         
         //page.blob = new Blob(page.audioChunks,{type:'audio/x-mpeg-3'});
-        page.blob = new Blob(page.audioChunks,{type:'audio/wav'});
+        page.blob = new Blob(page.audioChunks,{type:'audio/ogg'});
+        
+        //page.blob = new Blob(page.audioChunks,{type:'audio/wav'});
         
         recordedAudio.src       = URL.createObjectURL(page.blob);
         recordedAudio.controls  = true;
         recordedAudio.autoplay  = false;
-        
         audioDownload.href      = recordedAudio.src;
 
         console.log("---> audio src: " + recordedAudio.src);
